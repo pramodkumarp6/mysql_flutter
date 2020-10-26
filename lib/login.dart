@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'forgetuser.dart';
 import 'register.dart';
+
+import 'package:http/http.dart' as http;
+
+
 class login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,8 +39,38 @@ class MyCustomForm extends StatefulWidget {
 }
 // Create a corresponding State class. This class holds data related to the form.
 class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
+
+  TextEditingController email = TextEditingController();
+  TextEditingController pass = TextEditingController();
+
+
+
+
+
+
+  Future sign() async {
+
+
+ var url ="http://192.168.1.121/retrofit/public/login";
+ print(email);
+ print(pass);
+
+  var response =await http.post(url,body: {
+
+    "email": email.text,
+    "password": pass.text,
+
+
+  });
+
+ var data = json.decode(response.body);
+ print(data);
+
+
+
+
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -51,16 +87,22 @@ class MyCustomFormState extends State<MyCustomForm> {
               hintText: 'Enter your name',
               labelText: 'Email',
 
+
             ),
-            validator: (value){
+
+            controller: email,
+
+
+
+            /*validator: (value){
               if(value.isEmpty){
                 return 'Please enter some text';
               }
               return null;
 
-            }
-
+            }*/
           ),
+
 
 
           TextFormField(
@@ -74,12 +116,16 @@ class MyCustomFormState extends State<MyCustomForm> {
               labelText: 'Password',
 
             ),
-            validator: (value){
+              controller: pass
+
+
+
+          /* validator: (value){
               if(value.isEmpty){
                 return "Please enter Password";
               }
 
-            }
+            }*/
           ),
 
 
@@ -89,7 +135,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
           new Container(
-              padding: const EdgeInsets.only(left: 40.0, top: 50.0),
+              padding: const EdgeInsets.only(left: 150.0, top: 50.0),
               child: new RaisedButton(
                 child: const Text('Submit'),
                   color: Colors.blueAccent,
@@ -97,7 +143,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                   onPressed: (){
                   if(_formKey.currentState.validate()){
                     Scaffold.of(context)
-                    .showSnackBar(SnackBar(content:Text('Data is Over')));
+                    .showSnackBar(SnackBar(content:Text("data")));
+                    sign();
+
                   }
 
                 }
@@ -126,7 +174,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
           ),
           new Container(
-              padding: EdgeInsets.all(20.5) ,
+              padding: EdgeInsets.only(left: 10.5,right: 1.0) ,
             child: new RaisedButton(
               child: Text('ForgetUser'),
               color: Colors.green,

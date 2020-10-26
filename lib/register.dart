@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+import 'package:mysql_flutter/profile.dart';
 class register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,8 +34,41 @@ class MyCustomForm extends StatefulWidget {
 }
 // Create a corresponding State class. This class holds data related to the form.
 class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
+
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController gender = TextEditingController();
+
+
+
+
+      Future register() async{
+        var url="http://192.168.1.121/retrofit/public/register";
+
+        var response =await http.post(url,body: {
+
+          "email": email.text,
+          "password": password.text,
+          "name": name.text,
+          "gender": gender.text
+
+
+        });
+
+       var data =jsonDecode(response.body);
+
+       print(data);
+        Fluttertoast.showToast(msg: "data", toastLength: Toast.LENGTH_SHORT);
+
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>profile(),),);
+
+
+      }
+
+
+
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -48,13 +85,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                 hintText: 'Enter your name',
                 labelText: 'Name',
               ),
-              validator: (value){
-                if(value.isEmpty){
-                  return 'Please enter some text';
-                }
-                return null;
+            controller: name,
 
-              }
 
           ),
 
@@ -63,33 +95,30 @@ class MyCustomFormState extends State<MyCustomForm> {
             decoration: const InputDecoration(
               icon: const Icon(Icons.phone),
               hintText: 'Enter a phone number',
-              labelText: 'Phone',
+              labelText: 'email',
             ),
+            controller: email
           ),
           TextFormField(
             decoration: const InputDecoration(
               icon: const Icon(Icons.calendar_today),
-              hintText: 'Enter your date of birth',
-              labelText: 'Dob',
+              hintText: 'Enter your Password',
+              labelText: 'Password',
             ),
+            controller: password,
+
           ),
 
 
           TextFormField(
             decoration: const InputDecoration(
               icon: const Icon(Icons.mobile_friendly),
-              hintText: 'Enter your Mobile Number',
-              labelText: 'Mobile',
+              hintText: 'Enter your Gender Number',
+              labelText: 'gender',
             ),
+            controller: gender,
           ),
 
-          TextFormField(
-            decoration: const InputDecoration(
-                icon: const Icon(Icons.assignment_return_sharp),
-                hintText: 'Enter Address',
-                labelText: "Address"
-
-            ),),
 
 
 
@@ -100,7 +129,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
           new Container(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(left: 150.5,right: 10.5),
               child: new MaterialButton(
                   child:  Text('Submit',style:TextStyle(fontSize: 25,fontWeight: FontWeight.normal)
 
@@ -109,12 +138,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                   color: Colors.blueAccent,
                   textColor: Colors.white,
                   onPressed: (){
-                    if(_formKey.currentState.validate()){
-                      Scaffold.of(context)
-                          .showSnackBar(SnackBar(content:Text('Data is Over')));
+
+                      register();
                     }
 
-                  }
+
 
               )),
 
@@ -126,3 +154,4 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
 }
+

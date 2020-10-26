@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'login.dart';
+import 'main.dart';
 
 class forgetuser extends StatefulWidget{
   @override
