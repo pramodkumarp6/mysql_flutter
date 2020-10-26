@@ -44,7 +44,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
       Future register() async{
-        var url="http://192.168.1.121/retrofit/public/register";
+        var url="http://192.168.1.122/retrofit/public/register";
 
         var response =await http.post(url,body: {
 
@@ -58,10 +58,13 @@ class MyCustomFormState extends State<MyCustomForm> {
 
        var data =jsonDecode(response.body);
 
-       print(data);
-        Fluttertoast.showToast(msg: "data", toastLength: Toast.LENGTH_SHORT);
 
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>profile(),),);
+        Fluttertoast.showToast(msg:   data["message"], toastLength: Toast.LENGTH_SHORT);
+
+
+
+
+       // Navigator.push(context,MaterialPageRoute(builder:(context)=>profile() ));
 
 
       }
@@ -86,7 +89,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                 labelText: 'Name',
               ),
             controller: name,
-
+               validator: (value){
+                if(value.isEmpty){
+                  return 'Please Enter Name';
+                }
+                return null;
+               }
 
           ),
 
@@ -97,7 +105,14 @@ class MyCustomFormState extends State<MyCustomForm> {
               hintText: 'Enter a phone number',
               labelText: 'email',
             ),
-            controller: email
+            controller: email,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please Enter the Email';
+              }
+              return null;
+            }
+
           ),
           TextFormField(
             decoration: const InputDecoration(
@@ -105,9 +120,15 @@ class MyCustomFormState extends State<MyCustomForm> {
               hintText: 'Enter your Password',
               labelText: 'Password',
             ),
-            controller: password,
-
+              controller: password,
+              validator:(value){
+                if(value.isEmpty){
+                  return 'Please enter Password';
+                }
+                return null;
+              }
           ),
+
 
 
           TextFormField(
@@ -117,6 +138,14 @@ class MyCustomFormState extends State<MyCustomForm> {
               labelText: 'gender',
             ),
             controller: gender,
+            validator: (value){
+              if(value.isEmpty){
+                return'Please Enter Gender';
+              }
+              return null;
+            }
+
+
           ),
 
 
@@ -129,17 +158,26 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
           new Container(
-              padding: const EdgeInsets.only(left: 150.5,right: 10.5),
-              child: new MaterialButton(
-                  child:  Text('Submit',style:TextStyle(fontSize: 25,fontWeight: FontWeight.normal)
-
-                  ),
+              padding: const EdgeInsets.only(left: 150.5,right: 100.5),
+              child: new RaisedButton(
+                  child: const Text('Submit'),
 
                   color: Colors.blueAccent,
                   textColor: Colors.white,
                   onPressed: (){
 
+
+                    if(_formKey.currentState.validate()){
+
                       register();
+                    }
+
+
+
+
+
+
+
                     }
 
 

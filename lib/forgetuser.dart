@@ -53,6 +53,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                 labelText: 'Email',
 
               ),
+
+
               validator: (value){
                 if(value.isEmpty){
                   return 'Please enter Email';
@@ -62,6 +64,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               }
 
           ),
+
 
 
 
