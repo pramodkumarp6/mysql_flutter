@@ -76,7 +76,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
           new Container(
-              padding: const EdgeInsets.only(left: 150.0, top: 50.0),
+              padding:  EdgeInsets.only(left: 150.0, top: 50.0),
               child: new RaisedButton(
                   child: const Text('Submit'),
                   color: Colors.blueAccent,

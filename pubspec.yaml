@@ -26,6 +26,7 @@ dependencies:
 
   fluttertoast: ^3.1.0
   http: ^0.12.2
+  shared_preferences: ^0.5.12+2
 
 
 
@@ -37,6 +38,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   fluttertoast: ^3.1.1
+  spinner: ^1.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

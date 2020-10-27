@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:mysql_flutter/profile.dart';
+
 class register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
       Future register() async{
-        var url="http://192.168.1.122/retrofit/public/register";
+        var url="http://192.168.43.200/retrofit/public/register";
 
         var response =await http.post(url,body: {
 
@@ -62,9 +61,6 @@ class MyCustomFormState extends State<MyCustomForm> {
         Fluttertoast.showToast(msg:   data["message"], toastLength: Toast.LENGTH_SHORT);
 
 
-
-
-       // Navigator.push(context,MaterialPageRoute(builder:(context)=>profile() ));
 
 
       }

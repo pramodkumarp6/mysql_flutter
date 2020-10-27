@@ -3,13 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mysql_flutter/profile.dart';
 import 'forgetuser.dart';
 import 'register.dart';
+
 
 import 'package:http/http.dart' as http;
 
 
 class login extends StatelessWidget {
+  bool isLoggedIn = false;
+
   @override
   Widget build(BuildContext context) {
 
@@ -48,10 +54,12 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
 
+
+
   Future sign() async {
 
 
- var url ="http://192.168.1.122/retrofit/public/login";
+ var url ="http://192.168.43.200/retrofit/public/login";
  print(email);
  print(pass);
 
@@ -64,7 +72,21 @@ class MyCustomFormState extends State<MyCustomForm> {
   });
 
  var data = json.decode(response.body);
- print(data);
+
+          bool  d= data["error"];
+          var  ds= data["id"];
+
+
+          bool b =false ;
+ if(b == d) {
+   Navigator.push(context, MaterialPageRoute(builder: (context) => profile()));
+
+   //SharedPreferences prefs = await SharedPreferences.getInstance();
+
+ }else{
+   Fluttertoast.showToast(msg:   data["message"], toastLength: Toast.LENGTH_SHORT);
+ }
+
 
 
 
@@ -135,15 +157,15 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
           new Container(
-              padding: const EdgeInsets.only(left: 150.0, top: 50.0),
+             margin:  EdgeInsets.all(10.0),
               child: new RaisedButton(
-                child: const Text('Submit'),
+                child:  Text('Submit'),
                   color: Colors.blueAccent,
+
                   textColor: Colors.white,
                   onPressed: (){
                   if(_formKey.currentState.validate()){
-                    Scaffold.of(context)
-                    .showSnackBar(SnackBar(content:Text("data")));
+
                     sign();
 
                   }
@@ -199,3 +221,4 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
 }
+
