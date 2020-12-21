@@ -1,31 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:mysql_flutter/setting.dart';
+import 'package:mysql_flutter/userProfile.dart';
+
+
 
 class profile extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
+    return Drawer(
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(20),
+            color: Theme.of(context).primaryColor,
 
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(image: NetworkImage('https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg'),
+                          fit:BoxFit.fill
+                      ),
 
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Profile"),
-        ),
+                    ),
+                  ),
+                  Text('PRAMOD KUMAR',style: TextStyle(fontSize: 22,color: Colors.white
+                  ),
+                  ),
 
-        body: Center(
-          child: Text('Hello World'),
-        ),
-
+                  Text('pramodkumarp6@gmail.com',style: TextStyle( color: Colors.white),),
 
 
+                ],
+              ),
+
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Profile',style: TextStyle(fontSize:18,
+            ),
+            ),
+            onTap: () {
+                Navigator.of(context).pushNamed(userProfile.routename);
+            },
+          ),
+
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Setting',style: TextStyle(fontSize:18,
+            ),
+            ),
+            onTap: (){
+              Navigator.of(context).pushNamed(setting.routeName);
+
+            },
+          ),
+
+          ListTile(
+            leading: Icon(Icons.arrow_back,),
+            title: Text('Logout',style: TextStyle(fontSize:18,
+            ),
+            ),
+            onTap: null,
+          ),
 
 
 
-      ),
+        ],
+      )
+
+
+
+
+
+
+
+
     );
   }
 }

@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mysql_flutter/dashboard.dart';
 import 'package:mysql_flutter/profile.dart';
-import 'forgetuser.dart';
+
 import 'register.dart';
 
 
@@ -20,6 +21,7 @@ class login extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
         primarySwatch: Colors.green,
@@ -59,7 +61,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   Future sign() async {
 
 
- var url ="http://192.168.43.200/retrofit/public/login";
+ var url ="https://pramodkumarp6.000webhostapp.com/api/public/login";
  print(email);
  print(pass);
 
@@ -79,7 +81,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
           bool b =false ;
  if(b == d) {
-   Navigator.push(context, MaterialPageRoute(builder: (context) => profile()));
+   //Navigator.push(context, MaterialPageRoute(builder: (context) => profile()));
 
    //SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -203,7 +205,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               textColor: Colors.white,
               onPressed: (){
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context)=> forgetuser(),
+                MaterialPageRoute(builder: (context)=> dashboard(),
                 ),
                 );
               }
@@ -220,5 +222,10 @@ class MyCustomFormState extends State<MyCustomForm> {
       ),
     );
   }
+
+
+
+
+
 }
 
