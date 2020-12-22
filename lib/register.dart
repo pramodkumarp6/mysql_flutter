@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
@@ -82,6 +83,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               decoration: const InputDecoration(
                 icon: const Icon(Icons.person),
                 hintText: 'Enter your name',
+
                 labelText: 'Name',
               ),
             controller: name,

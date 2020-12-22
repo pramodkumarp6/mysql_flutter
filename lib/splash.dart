@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
 
- class splash extends StatefulWidget{
-  @override
-  State<StatefulWidget> createState() {
+ class splash extends StatelessWidget {
 
-    throw UnimplementedError();
-  }
+   @override
+   Widget build(BuildContext context) {
+     return Scaffold(
+       backgroundColor: Colors.green,
 
 
-}
+       body: Center(
+
+         child: Column(
+
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: <Widget>[
+             Text("we are in Home page")
+
+           ],
+
+
+         ),
+       ),
+
+     );
+   }
+ }

@@ -13,7 +13,7 @@ class profile extends StatelessWidget{
         children: <Widget>[
           Container(
             width: double.infinity,
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(35),
             color: Theme.of(context).primaryColor,
 
             child: Center(
@@ -24,7 +24,7 @@ class profile extends StatelessWidget{
                     height: 100,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      image: DecorationImage(image: NetworkImage('https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg'),
+                      image: DecorationImage(image: NetworkImage('https://picsum.photos/250?image=9'),
                           fit:BoxFit.fill
                       ),
 

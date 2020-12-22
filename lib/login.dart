@@ -6,7 +6,12 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mysql_flutter/dashboard.dart';
-import 'package:mysql_flutter/profile.dart';
+import 'package:http_auth/http_auth.dart';
+import 'package:mysql_flutter/services/appUrl.dart';
+import 'package:mysql_flutter/splash.dart';
+import 'package:http/http.dart';
+
+
 
 import 'register.dart';
 
@@ -15,13 +20,13 @@ import 'package:http/http.dart' as http;
 
 
 class login extends StatelessWidget {
-  bool isLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
 
       theme: ThemeData(
         primarySwatch: Colors.green,
@@ -34,6 +39,7 @@ class login extends StatelessWidget {
         ),
 
         body: MyCustomForm(),
+          resizeToAvoidBottomPadding: false
       ),
     );
   }
@@ -49,44 +55,36 @@ class MyCustomForm extends StatefulWidget {
 class MyCustomFormState extends State<MyCustomForm> {
 
   TextEditingController email = TextEditingController();
-  TextEditingController pass = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+   sign() async {
+
+     Map headers = {
+       'content-type': 'application/json',
+       'accept': 'application/json'
+      // 'authorization': basicAuth
+     };
 
 
+     var response =await http.post(AppUrl.login, body: {
 
-
-
-
-
-
-  Future sign() async {
-
-
- var url ="https://pramodkumarp6.000webhostapp.com/api/public/login";
- print(email);
- print(pass);
-
-  var response =await http.post(url,body: {
-
-    "email": email.text,
-    "password": pass.text,
-
-
+    'email': email.text,
+    'password': password.text
   });
 
  var data = json.decode(response.body);
-
-          bool  d= data["error"];
-          var  ds= data["id"];
+        int   status = data['status'];
 
 
-          bool b =false ;
- if(b == d) {
-   //Navigator.push(context, MaterialPageRoute(builder: (context) => profile()));
+        if(status == 200) {
+
+ Navigator.push(context, MaterialPageRoute(builder: (context) => dashboard()));
 
    //SharedPreferences prefs = await SharedPreferences.getInstance();
 
  }else{
-   Fluttertoast.showToast(msg:   data["message"], toastLength: Toast.LENGTH_SHORT);
+       Fluttertoast.showToast(msg:  data['message'], toastLength: Toast.LENGTH_SHORT);
+
  }
 
 
@@ -117,10 +115,10 @@ class MyCustomFormState extends State<MyCustomForm> {
             controller: email,
 
 
-
-            /*validator: (value){
+/*
+            validator: (value){
               if(value.isEmpty){
-                return 'Please enter some text';
+                return 'Please enter Email';
               }
               return null;
 
@@ -140,15 +138,15 @@ class MyCustomFormState extends State<MyCustomForm> {
               labelText: 'Password',
 
             ),
-              controller: pass
+              controller: password,
 
 
 
-          /* validator: (value){
+         /* validator: (value){
               if(value.isEmpty){
-                return "Please enter Password";
+                return 'Please enter Password';
               }
-
+              return null;
             }*/
           ),
 
@@ -159,7 +157,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
           new Container(
-             margin:  EdgeInsets.all(10.0),
+             margin:  EdgeInsets.all(50.10),
               child: new RaisedButton(
                 child:  Text('Submit'),
                   color: Colors.blueAccent,
@@ -178,7 +176,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
           new Container(
-            padding:  EdgeInsets.only(left: 250.0, top:100),
+            padding:  EdgeInsets.only(left: 25.0, top:10),
             child: new RaisedButton(
             child: const Text('Register'),
                color: Colors.green,
@@ -198,14 +196,15 @@ class MyCustomFormState extends State<MyCustomForm> {
 
           ),
           new Container(
-              padding: EdgeInsets.only(left: 10.5,right: 1.0) ,
+              padding: EdgeInsets.only(left: 5.5,right: 1.0) ,
             child: new RaisedButton(
               child: Text('ForgetUser'),
               color: Colors.green,
               textColor: Colors.white,
               onPressed: (){
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context)=> dashboard(),
+                MaterialPageRoute(builder: (context)=> splash(),
+
                 ),
                 );
               }
